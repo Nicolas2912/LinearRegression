@@ -81,4 +81,4 @@ tmp/
 *.weights
 *.data
 /data/processed/
-/models/saved/
+/models/saved/client/.git/
