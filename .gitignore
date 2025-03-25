@@ -1,0 +1,84 @@
+# C++ specific
+*.o
+*.out
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.lo
+*.la
+*.slo
+*.lai
+a.out
+.vstags
+.vs/
+*.gch
+*.pch
+
+# Build directories
+build/
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+target/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+
+# Node.js / React
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.pnp/
+.pnp.js
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build artifacts for React
+/client/build
+/client/dist
+/client/.cache
+/client/coverage
+
+# IDE/Editor specific
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+.project
+*.cbp
+*.layout
+*.depend
+
+# Temporary files
+temp/
+tmp/
+*.log
+*.tmp
+
+# Linear regression specific
+*.model
+*.weights
+*.data
+/data/processed/
+/models/saved/
