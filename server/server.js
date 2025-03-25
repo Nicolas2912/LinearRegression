@@ -9,7 +9,7 @@ const port = 3001; // Port for the backend server
 // --- Configuration ---
 // Adjust the path to your C++ executable if needed.
 // This assumes server.js is run from the server/ directory.
-const cppExecutablePath = path.join(__dirname, '..', 'cpp', 'linear_regression_app');
+const cppExecutablePath = path.join(__dirname, '..', 'cpp', 'linear_regression_app.exe');
 // --- End Configuration ---
 
 
@@ -44,7 +44,7 @@ function parseCppOutput(output) {
 
 // POST /api/train
 app.post('/api/train', (req, res) => {
-    const { x_values, y_values, learning_rate, max_iterations } = req.body;
+    const { x_values, y_values, learning_rate, max_iterations, batch_size } = req.body;
 
     // Basic input validation
     if (!Array.isArray(x_values) || !Array.isArray(y_values) || x_values.length === 0 || x_values.length !== y_values.length) {
@@ -58,6 +58,7 @@ app.post('/api/train', (req, res) => {
     const args = ['train', x_str, y_str];
     if (learning_rate !== undefined) args.push(String(learning_rate));
     if (max_iterations !== undefined) args.push(String(max_iterations));
+    if (batch_size !== undefined) args.push(String(batch_size));
 
 
     console.log(`Executing: ${cppExecutablePath} ${args.join(' ')}`); // Log execution
