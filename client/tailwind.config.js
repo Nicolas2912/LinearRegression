@@ -3,35 +3,20 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}", // Ensure this covers your components
+    "./src/**/*.{js,jsx,ts,tsx}",
     "./public/index.html",
   ],
   theme: {
-    extend: {}, // You can add theme extensions here if needed
+    extend: {},
   },
-  // Add DaisyUI to the plugins array
+  // Add DaisyUI directly
   plugins: [
-    // Try to require daisyui, but don't fail if it's not available
-    function() {
-      try {
-        return require("daisyui");
-      } catch (e) {
-        console.warn("daisyui not found, continuing without it");
-        return {};
-      }
-    }
+    require("daisyui") // <--- REMOVE the try-catch function wrapper
   ],
 
   // DaisyUI configuration (optional - themes are defined here)
   daisyui: {
-    themes: ["light", "dark", "cupcake", "synthwave"], // Your chosen themes
+    themes: ["light", "dark", "cupcake", "synthwave"],
     // other daisyui config options...
-    // styled: true,
-    // base: true,
-    // utils: true,
-    // logs: true,
-    // rtl: false,
-    // prefix: "",
-    // darkTheme: "dark",
   },
 }

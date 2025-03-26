@@ -20,15 +20,13 @@ services:
   - type: web
     name: linear-regression-frontend
     runtime: static
-    buildCommand: cd client && npm install && npm run render-build
+    buildCommand: cd client && npm install && npm run build
     staticPublishPath: ./client/build
     envVars:
       - key: NODE_ENV
         value: production
       - key: REACT_APP_API_URL
         value: https://linear-regression-api.onrender.com/api
-      - key: NODE_VERSION
-        value: 16.20.0
     routes:
       - type: rewrite
         source: /*
