@@ -15,7 +15,9 @@ import './App.css';
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend, Title);
 
-const API_URL = 'http://localhost:3001/api';
+// Get API URL from environment variable or use default
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+console.log("Using API URL:", API_URL);
 
 function App() {
   // Input states
