@@ -2,14 +2,24 @@ const express = require('express');
 const { execFile } = require('child_process');
 const path = require('path');
 const cors = require('cors');
+const fs = require('fs');
 
 const app = express();
-const port = 3001; // Port for the backend server
+const port = process.env.PORT || 3001; // Allow port to be set via environment variable
 
 // --- Configuration ---
-// Adjust the path to your C++ executable if needed.
-// This assumes server.js is run from the server/ directory.
-const cppExecutablePath = path.join(__dirname, '..', 'cpp', 'linear_regression_app.exe');
+// Determine the executable extension based on the platform
+const isWindows = process.platform === 'win32';
+const executableExt = isWindows ? '.exe' : '';
+
+// Adjust the path to your C++ executable - platform-specific path
+const cppExecutablePath = path.join(__dirname, '..', 'cpp', `linear_regression_app${executableExt}`);
+
+// Verify the executable exists
+if (!fs.existsSync(cppExecutablePath)) {
+    console.error(`ERROR: C++ executable not found at: ${cppExecutablePath}`);
+    console.error('Make sure to run the build script before starting the server.');
+}
 // --- End Configuration ---
 
 
@@ -41,6 +51,15 @@ function parseCppOutput(output) {
 }
 
 // --- API Routes ---
+
+// GET /api/health - Health check endpoint for Render
+app.get('/api/health', (req, res) => {
+    res.status(200).json({ 
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        executable: fs.existsSync(cppExecutablePath)
+    });
+});
 
 // POST /api/train
 app.post('/api/train', (req, res) => {
@@ -142,5 +161,9 @@ app.post('/api/predict', (req, res) => {
 app.listen(port, () => {
     console.log(`Node.js server listening on http://localhost:${port}`);
     console.log(`Expecting C++ executable at: ${cppExecutablePath}`);
+    
+    // Log platform info
+    console.log(`Platform: ${process.platform}, isWindows: ${isWindows}`);
+    console.log(`Executable exists: ${fs.existsSync(cppExecutablePath)}`);
 });
 // --- End Start Server ---
