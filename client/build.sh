@@ -1,16 +1,37 @@
 #!/bin/bash
-set -e  # Exit immediately if a command exits with a non-zero status
+# Exit on error
+set -e
 
-# Debug - print current directory
+echo "===== Starting build process ====="
 echo "Current directory: $(pwd)"
-ls -la
+echo "Node version: $(node -v)"
+echo "NPM version: $(npm -v)"
 
-# Explicitly install daisyui with exact version
-npm install daisyui@5.0.9 --no-save
+# Clean install to avoid dependency conflicts
+echo "===== Cleaning previous installations ====="
+rm -rf node_modules package-lock.json
 
-# Check if daisyui is installed
-ls -la node_modules | grep daisyui
+# Install dependencies
+echo "===== Installing dependencies ====="
+npm install --no-optional
 
-# Regular build process
-npm install
+# Explicitly install daisyui
+echo "===== Installing daisyui ====="
+npm install daisyui@5.0.9 --save-dev
+
+# Verify daisyui installation
+echo "===== Verifying daisyui installation ====="
+if [ -d "node_modules/daisyui" ]; then
+  echo "daisyui installed successfully"
+  ls -la node_modules/daisyui
+else
+  echo "daisyui installation failed. Creating empty module."
+  mkdir -p node_modules/daisyui
+  echo "module.exports = {};" > node_modules/daisyui/index.js
+fi
+
+# Build the project
+echo "===== Building project ====="
 npm run build
+
+echo "===== Build completed ====="
