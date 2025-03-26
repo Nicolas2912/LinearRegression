@@ -17,10 +17,11 @@ services:
     autoDeploy: true
 
   # Frontend service (static site)
-  - type: static
+  - type: web
     name: linear-regression-frontend
+    runtime: static
     buildCommand: cd client && npm install && npm run build
-    publishDirectory: client/build
+    staticPublishPath: ./client/build
     envVars:
       - key: NODE_ENV
         value: production
