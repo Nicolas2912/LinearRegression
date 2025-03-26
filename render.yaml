@@ -26,10 +26,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: REACT_APP_API_URL
-        fromService:
-          name: linear-regression-api
-          type: web
-          property: url
+        value: https://linear-regression-api.onrender.com/api
     routes:
       - type: rewrite
         source: /*
