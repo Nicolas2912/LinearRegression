@@ -12,20 +12,35 @@ OBJS = $(SRCS:.cpp=.o)
 # Executable name
 TARGET = linear_regression_app
 
+# Detect operating system
+ifeq ($(OS),Windows_NT)
+    # Windows commands
+    RM = del /Q
+    EXT = .exe
+else
+    # Linux/Mac commands
+    RM = rm -f
+    EXT = 
+endif
+
 # Default target
-all: $(TARGET)
+all: $(TARGET)$(EXT)
 
 # Link object files to create executable
-$(TARGET): $(OBJS)
+$(TARGET)$(EXT): $(OBJS)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
 
 # Compile source files into object files
 %.o: %.cpp linear_regression.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Clean up build files - Windows compatible
+# Clean up build files - cross-platform
 clean:
-	-del $(OBJS) $(TARGET) 2> nul || (exit 0) # Use del, ignore errors if files don't exist
+ifeq ($(OS),Windows_NT)
+	-$(RM) $(OBJS) $(TARGET).exe 2> nul || (exit 0)
+else
+	$(RM) $(OBJS) $(TARGET)
+endif
 
 # Phony targets
 .PHONY: all clean
