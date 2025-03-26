@@ -10,7 +10,17 @@ module.exports = {
     extend: {}, // You can add theme extensions here if needed
   },
   // Add DaisyUI to the plugins array
-  plugins: [require("daisyui")],
+  plugins: [
+    // Try to require daisyui, but don't fail if it's not available
+    function() {
+      try {
+        return require("daisyui");
+      } catch (e) {
+        console.warn("daisyui not found, continuing without it");
+        return {};
+      }
+    }
+  ],
 
   // DaisyUI configuration (optional - themes are defined here)
   daisyui: {
