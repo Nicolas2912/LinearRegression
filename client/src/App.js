@@ -219,21 +219,17 @@ function App() {
   useEffect(() => {
     const xVals = parseInputString(xInput);
     const yVals = parseInputString(yInput);
-
+  
     if (xVals.length === 0 || yVals.length === 0 || xVals.length !== yVals.length) {
          // Only clear prediction state if data is invalid AND a prediction currently exists
-         if(prediction !== null || lastPredictedX !== null) {
+         if(prediction !== null || lastPredictedX !== null) { // <-- ESLint flags these
              console.log("Effect [input validation]: Clearing prediction state due to invalid/empty data.");
              setPrediction(null);
              setLastPredictedX(null);
-             // Optionally force a chart redraw without prediction here if needed,
-             // though the main effect should handle the base data redraw correctly.
-             // updateChart(xVals, yVals, slope, intercept, null, null, axisBounds);
          }
     }
-    // Only depends on the raw inputs for this specific clearing task
-  }, [xInput, yInput]); // Note: Removed slope/intercept/bounds dependencies here
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [xInput, yInput]); // Intentionally only depends on inputs to clear prediction when inputs invalidate
   // --- Keep Theme Toggle Effect Separate ---
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', activeTheme);
