@@ -11,7 +11,7 @@ module.exports = {
   },
   // Add DaisyUI directly
   plugins: [
-    require("daisyui") // <--- REMOVE the try-catch function wrapper
+    require("daisyui")
   ],
 
   // DaisyUI configuration (optional - themes are defined here)
