@@ -2,6 +2,7 @@ services:
   # Backend service
   - type: web
     name: linear-regression-api
+    plan: free
     env: node
     buildCommand: cd server && npm install
     startCommand: cd server && npm start
@@ -19,6 +20,7 @@ services:
   # Frontend service (static site)
   - type: web
     name: linear-regression-frontend
+    plan: free
     env: static
     buildCommand: cd client && npm install && npm run build
     staticPublishPath: ./client/build
